@@ -6,12 +6,24 @@ module.exports = {
   plugins: [
     {
       rules: {
-        "gitlab-task-prefix": ({ subject }, _, prefixes) => {
+        "gitlab-task-prefix": ({ raw }, _, prefixes) => {
           const prefixRegex = (prefix) =>
-            new RegExp(`^\\[${prefix}-\\d+\\]\\ [A-Z]`);
+            new RegExp(`^\\[${prefix}-\\d+\\]\\s[A-Z]`);
+
+          const result = prefixes.some((prefix) =>
+            prefixRegex(prefix).test(raw)
+          );
+
+          console.log(`Subject: ${raw}`);
+          console.log(`PREFIXES: ${prefixes}`);
+          console.log(
+            `TEST DEV: ${prefixRegex("DEV").test("[DEV-1234] New Test")}`
+          );
+          console.log(`TEST PROD: ${prefixRegex("PROD").test(raw)}`);
+          console.log(`Result: ${result}`);
 
           return [
-            prefixes.some((prefix) => prefixRegex(prefix).test(subject)),
+            result,
             `Your subject should respect this form: 
     [<prefix>-<number>] <description>
 
