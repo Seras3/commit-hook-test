@@ -14,14 +14,6 @@ module.exports = {
             prefixRegex(prefix).test(raw)
           );
 
-          console.log(`Subject: ${raw}`);
-          console.log(`PREFIXES: ${prefixes}`);
-          console.log(
-            `TEST DEV: ${prefixRegex("DEV").test("[DEV-1234] New Test")}`
-          );
-          console.log(`TEST PROD: ${prefixRegex("PROD").test(raw)}`);
-          console.log(`Result: ${result}`);
-
           return [
             result,
             `Your subject should respect this form: 
